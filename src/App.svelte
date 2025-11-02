@@ -857,26 +857,17 @@
   const { swipe, onswipe, onswipedown, onswipemove, onswipeup } = useSwipe(
     handler,
     () => ({ timeframe: 300, minSwipeDistance: 50, touchAction: 'none' }),
-    {
-      onswipemove: moveHandler,
-      onswipeup: upHandler,
-      onswipedown: downHandler,
-    },
     true,
   );
 
   function handler(event: SwipeCustomEvent) {
-    console.log(event.detail.direction);
-  }
-
-  function moveHandler() {
-    console.log('move');
-  }
-  function upHandler() {
-    console.log('up');
-  }
-  function downHandler() {
-    console.log('down');
+    const dir = event.detail.direction;
+    if (dir === 'left' || dir === 'up') {
+      previous();
+    }
+    if (dir === 'right' || dir === 'down') {
+      next();
+    }
   }
 
   function handleKey(e: KeyboardEvent) {
