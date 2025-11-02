@@ -97,14 +97,11 @@
       lines: [{ t: 'Je la salue.' }],
     },
     {
-      lines: [
-        { t: 'Elle s’appelle', style: 'font-[Pacifico]' },
-        { t: 'JASMIINA', style: 'text-6xl text-blue-600 font-[Caprasimo]' },
-      ],
+      lines: [{ t: 'Elle s’appelle' }, { t: 'JASMIINA', style: 'text-6xl text-blue-600 font-[Caprasimo]' }],
     },
     {
       lines: [
-        { t: 'Elle est', style: 'font-[Pacifico]' },
+        { t: 'Elle est' },
         { t: 'BELLE', style: 'text-6xl text-blue-600 custom-animate-heartbeat font-[Caprasimo]', hold: 1000 },
       ],
     },
@@ -861,6 +858,14 @@
     }
   }
 
+  function handleClick(e: MouseEvent) {
+    if (e.clientX / (window.visualViewport?.width || 1) < 0.2) {
+      previous();
+    } else {
+      next();
+    }
+  }
+
   function parseHash() {
     const [p, l] = location.hash.slice(1).split('/');
     setPageIndex(parseInt(p) || 0);
@@ -877,7 +882,7 @@
 <svelte:window on:hashchange={parseHash} />
 
 <svelte:body
-  onclick={next}
+  onclick={handleClick}
   onkeydown={handleKey}
 />
 
