@@ -11,7 +11,6 @@
     setPageIndex,
     setPages,
   } from './lib/store.svelte';
-  import { useSwipe, type SwipeCustomEvent, type GestureCustomEvent } from 'svelte-gestures';
 
   setPages([
     {
@@ -854,22 +853,6 @@
     },
   ]);
 
-  const { swipe, onswipe, onswipedown, onswipemove, onswipeup } = useSwipe(
-    handler,
-    () => ({ timeframe: 300, minSwipeDistance: 50, touchAction: 'none' }),
-    true,
-  );
-
-  function handler(event: SwipeCustomEvent) {
-    const dir = event.detail.direction;
-    if (dir === 'left' || dir === 'up') {
-      previous();
-    }
-    if (dir === 'right' || dir === 'down') {
-      next();
-    }
-  }
-
   function handleKey(e: KeyboardEvent) {
     if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       previous();
@@ -891,12 +874,9 @@
   });
 </script>
 
+<svelte:window on:hashchange={parseHash} />
+
 <svelte:body
-  {@attach swipe}
-  {onswipe}
-  {onswipedown}
-  {onswipemove}
-  {onswipeup}
   onclick={next}
   onkeydown={handleKey}
 />
